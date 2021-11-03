@@ -1,0 +1,51 @@
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  .pots {
+    max-width: 700px;
+    height: 108px;
+
+    a {
+      display: block;
+
+      & + a {
+        margin: 3rem 0;
+      }
+
+      strong {
+        display: block;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1.125rem;
+        font-weight: 400;
+        color: var(--body);
+        line-height: 1.361rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      time {
+        font-size: 0.875rem;
+        margin-left: 0.5rem;
+        margin-right: 1.625rem;
+      }
+
+      span {
+        font-size: 0.875rem;
+        margin-left: 0.5rem;
+      }
+    }
+
+    .loadingPosts {
+      margin-top: 4rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--highlight);
+    }
+  }
+}
