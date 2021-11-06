@@ -5,11 +5,11 @@ import { FiCalendar, FiUser } from 'react-icons/fi';
 import Prismic from '@prismicio/client';
 
 import { useState } from 'react';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import { getPrismicClient } from '../services/prismic';
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
-// eslint-disable-next-line import/order
-import { RichText } from 'prismic-dom';
 
 interface Post {
   uid?: string;
@@ -30,57 +30,34 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-/* fetch(next_page)
-      .then(response => response.json())
-      .then(data => setNewResults(data));
-      const post = newResults.map(post => {
-        return {
-          uid: post.uid,
-          first_publication_date: new Date(
-          post.first_publication_date
-        ).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-        }),
-        data: {
-          title: post.data.title,
-          author: post.data.author,
-          subtitle: post.data.subtitle,
-        },
-      }
-    } */
-
 export default function Home({
   results,
   next_page,
 }: PostPagination): JSX.Element {
+  const [nextPages, setNextPages] = useState(next_page);
   const [nextPage, setNextPage] = useState<Post[]>([...results]);
 
-  async function handleNextPage(): Promise<void> {
-    await fetch(next_page)
+  function handleNextPage(): void {
+    fetch(next_page)
       .then(response => response.json())
-      .then(data => setNextPage(data.results));
+      .then(data => {
+        setNextPage(data.results);
+        setNextPages(data.next_page);
+      });
 
     const posts = nextPage.map(post => ({
       uid: post.uid,
-      first_publication_date: new Date(
-        post.first_publication_date
-      ).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      }),
+      first_publication_date: post.first_publication_date,
       data: {
         title: post.data.title,
         author: post.data.author,
         subtitle: post.data.subtitle,
       },
     }));
+
     setNextPage([...results, ...posts]);
-    console.log(nextPage);
   }
-  console.log(next_page);
+
   return (
     <>
       <Head>
@@ -95,13 +72,21 @@ export default function Home({
                 <strong>{post.data.title}</strong>
                 <p>{post.data.subtitle}</p>
                 <FiCalendar />
-                <time>{post.first_publication_date}</time>
+                <time>
+                  {format(
+                    new Date(post.first_publication_date),
+                    'dd MMM yyyy',
+                    {
+                      locale: ptBR,
+                    }
+                  )}
+                </time>
                 <FiUser />
                 <span>{post.data.author}</span>
               </a>
             </Link>
           ))}
-          {next_page !== undefined ? (
+          {nextPages !== null ? (
             <button
               type="button"
               onClick={handleNextPage}
@@ -130,7 +115,7 @@ export const getStaticProps: GetStaticProps = async () => {
         'post.banner',
         'post.content',
       ],
-      pageSize: 1,
+      pageSize: 2,
     }
   );
 
@@ -138,13 +123,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const results = postsResponse.results.map(post => ({
     uid: post.uid,
-    first_publication_date: new Date(
-      post.first_publication_date
-    ).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }),
+    first_publication_date: format(
+      new Date(post.first_publication_date),
+      'dd MMM yyyy',
+      {
+        locale: ptBR,
+      }
+    ),
     data: {
       title: post.data.title,
       author: post.data.author,
@@ -154,6 +139,5 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { results, next_page },
-    revalidate: 60 * 30,
   };
 };
