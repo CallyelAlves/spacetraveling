@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { FiCalendar, FiUser } from 'react-icons/fi';
+import { FiCalendar, FiUser, FiClock } from 'react-icons/fi';
 
 import Head from 'next/head';
 import { RichText } from 'prismic-dom';
@@ -31,26 +31,37 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps): JSX.Element {
-  console.log(post);
+  const readingTime = post.data.content.reduce((sum, content) => {
+    const textTime = RichText.asText(content.body).split(' ').length;
+    console.log(textTime, sum);
+    return Math.ceil((sum + textTime) / 200);
+  }, 0);
   return (
     <>
       <Head>
-        <title>teste</title>
+        <title>{post.data.title}</title>
       </Head>
-      <main>
-        <article>
-          {/* <img src={post.data.banner.url} alt={post.data.title} /> */}
+
+      <main className={styles.container}>
+        <article className={styles.post}>
+          <img
+            className={styles.banner}
+            src={post.data.banner.url}
+            alt={post.data.title}
+          />
           <h1>{post.data.title}</h1>
           <FiCalendar />
           <time>{post.first_publication_date}</time>
           <FiUser />
           <span>{post.data.author}</span>
-          {post.data.content.map(arg => (
-            <div key={post.data.title}>
-              <p dangerouslySetInnerHTML={{ __html: arg.heading }} />
-              {arg.body.map(body => (
-                <p
-                  key={post.data.author}
+          <FiClock />
+          <time>{readingTime} min</time>
+          {post.data.content.map(heading => (
+            <div className={styles.content} key={post.data.title}>
+              <div dangerouslySetInnerHTML={{ __html: heading.heading }} />
+              {heading.body.map(body => (
+                <div
+                  key={body.text}
                   dangerouslySetInnerHTML={{
                     __html: body.text,
                   }}
@@ -90,7 +101,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     ),
     data: {
       title: response.data.title,
-      banner: response.data.banner,
+      banner: {
+        url: response.data.banner.url,
+      },
       author: response.data.author,
       content: response.data.content,
     },
@@ -98,5 +111,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: { post },
+    revalidate: 60 * 30,
   };
 };
