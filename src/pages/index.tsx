@@ -70,18 +70,20 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
               <a>
                 <h1>{post.data.title}</h1>
                 <p>{post.data.subtitle}</p>
-                <FiCalendar />
-                <time>
-                  {format(
-                    new Date(post.first_publication_date),
-                    'dd MMM yyyy',
-                    {
-                      locale: ptBR,
-                    }
-                  )}
-                </time>
-                <FiUser />
-                <span>{post.data.author}</span>
+                <div className={styles.info}>
+                  <FiCalendar />
+                  <time>
+                    {format(
+                      new Date(post.first_publication_date),
+                      'dd MMM yyyy',
+                      {
+                        locale: ptBR,
+                      }
+                    )}
+                  </time>
+                  <FiUser />
+                  <span>{post.data.author}</span>
+                </div>
               </a>
             </Link>
           ))}
@@ -143,5 +145,6 @@ export const getStaticProps: GetStaticProps = async () => {
         next_page,
       },
     },
+    revalidate: 60 * 30, // 30 minutes
   };
 };

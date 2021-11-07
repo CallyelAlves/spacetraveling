@@ -65,10 +65,7 @@ export default function Post({ post }: PostProps): JSX.Element {
           </div>
           <div className={styles.content}>
             {post.data.content.map(heading => (
-              <div
-                className={styles.contentHeading}
-                dangerouslySetInnerHTML={{ __html: heading.heading }}
-              />
+              <h2 dangerouslySetInnerHTML={{ __html: heading.heading }} />
             ))}
             <div dangerouslySetInnerHTML={{ __html: body }} />
           </div>
