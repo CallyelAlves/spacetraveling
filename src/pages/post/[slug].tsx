@@ -36,10 +36,10 @@ export default function Post({ post }: PostProps): JSX.Element {
     return Math.ceil((sum + textTime) / 200);
   }, 0);
 
-  const body = post.data.content.reduce((prev, container) => {
+  const body = post.data.content.map(container => {
     const data = RichText.asHtml(container.body);
     return data;
-  }, '');
+  });
 
   return (
     <>
@@ -65,9 +65,16 @@ export default function Post({ post }: PostProps): JSX.Element {
           </div>
           <div className={styles.content}>
             {post.data.content.map(heading => (
-              <h2 dangerouslySetInnerHTML={{ __html: heading.heading }} />
+              <h2
+                dangerouslySetInnerHTML={{ __html: heading.heading }}
+                key={post.data.title}
+              />
             ))}
-            <div dangerouslySetInnerHTML={{ __html: body }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: String(body),
+              }}
+            />
           </div>
         </article>
       </main>
