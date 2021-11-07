@@ -5,13 +5,12 @@
 
   .pots {
     max-width: 700px;
-    height: 108px;
 
     a {
       display: block;
 
       & + a {
-        margin: 3rem 0;
+        margin-top: 3rem;
       }
 
       h1 {
