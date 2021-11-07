@@ -20,6 +20,11 @@
       margin-bottom: 0.5rem;
     }
 
+    .infos {
+      display: flex;
+      align-items: center;
+    }
+
     time {
       font-size: 0.875rem;
       margin-left: 0.5rem;
@@ -35,12 +40,24 @@
 
     .content {
       margin-top: 4rem;
-      
+      font-size: 1.125rem;
+      text-align: justify;
+      line-height: 1.6rem;
+
       div {
-        margin: 1rem 0;
-        font-size: 1.125rem;
-        text-align: justify;
-        line-height: 1.6rem;
+        margin: 2rem 0;
+
+        p, ul {
+          margin: 1.5rem 0;
+        }
+    
+        ul {
+          padding-left: 1.5rem;
+    
+          li {
+            margin: 0.5rem 0;
+          }
+        }
       }
     }
   }

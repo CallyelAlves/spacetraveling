@@ -30,15 +30,14 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home({
-  results,
-  next_page,
-}: PostPagination): JSX.Element {
-  const [nextPages, setNextPages] = useState(next_page);
-  const [nextPage, setNextPage] = useState<Post[]>([...results]);
+export default function Home({ postsPagination }: HomeProps): JSX.Element {
+  const [nextPages, setNextPages] = useState(postsPagination.next_page);
+  const [nextPage, setNextPage] = useState<Post[]>([
+    ...postsPagination.results,
+  ]);
 
   function handleNextPage(): void {
-    fetch(next_page)
+    fetch(postsPagination.next_page)
       .then(response => response.json())
       .then(data => {
         setNextPage(data.results);
@@ -55,7 +54,7 @@ export default function Home({
       },
     }));
 
-    setNextPage([...results, ...posts]);
+    setNextPage([...postsPagination.results, ...posts]);
   }
 
   return (
@@ -138,6 +137,11 @@ export const getStaticProps: GetStaticProps = async () => {
   }));
 
   return {
-    props: { results, next_page },
+    props: {
+      postsPagination: {
+        results,
+        next_page,
+      },
+    },
   };
 };

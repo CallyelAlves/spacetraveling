@@ -33,9 +33,14 @@ interface PostProps {
 export default function Post({ post }: PostProps): JSX.Element {
   const readingTime = post.data.content.reduce((sum, content) => {
     const textTime = RichText.asText(content.body).split(' ').length;
-    console.log(textTime, sum);
     return Math.ceil((sum + textTime) / 200);
   }, 0);
+
+  const body = post.data.content.reduce((prev, container) => {
+    const data = RichText.asHtml(container.body);
+    return data;
+  }, '');
+
   return (
     <>
       <Head>
@@ -50,25 +55,23 @@ export default function Post({ post }: PostProps): JSX.Element {
             alt={post.data.title}
           />
           <h1>{post.data.title}</h1>
-          <FiCalendar />
-          <time>{post.first_publication_date}</time>
-          <FiUser />
-          <span>{post.data.author}</span>
-          <FiClock />
-          <time>{readingTime} min</time>
-          {post.data.content.map(heading => (
-            <div className={styles.content} key={post.data.title}>
-              <div dangerouslySetInnerHTML={{ __html: heading.heading }} />
-              {heading.body.map(body => (
-                <div
-                  key={body.text}
-                  dangerouslySetInnerHTML={{
-                    __html: body.text,
-                  }}
-                />
-              ))}
-            </div>
-          ))}
+          <div className={styles.infos}>
+            <FiCalendar />
+            <time>{post.first_publication_date}</time>
+            <FiUser />
+            <span>{post.data.author}</span>
+            <FiClock />
+            <time>{readingTime} min</time>
+          </div>
+          <div className={styles.content}>
+            {post.data.content.map(heading => (
+              <div
+                className={styles.contentHeading}
+                dangerouslySetInnerHTML={{ __html: heading.heading }}
+              />
+            ))}
+            <div dangerouslySetInnerHTML={{ __html: body }} />
+          </div>
         </article>
       </main>
     </>
@@ -76,7 +79,7 @@ export default function Post({ post }: PostProps): JSX.Element {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   // const prismic = getPrismicClient();
   // const posts = await prismic.query();
   return {
