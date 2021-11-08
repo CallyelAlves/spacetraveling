@@ -24,7 +24,18 @@
       display: flex;
       align-items: center;
       margin-bottom: 1rem;
-      // margin-bottom: 4rem;
+      font-size: 0.875rem;
+      color: var(--info);
+
+      time {
+        margin-left: 0.5rem;
+        margin-right: 1.625rem;
+      }
+  
+      span {
+        margin-left: 0.5rem;
+        margin-right: 1.625rem;
+      }
     }
 
     .lastPublicationDate {
@@ -32,18 +43,6 @@
       font-size: 0.875rem;
       font-style: italic;
       color: var(--info);
-    }
-
-    time {
-      font-size: 0.875rem;
-      margin-left: 0.5rem;
-      margin-right: 1.625rem;
-    }
-
-    span {
-      font-size: 0.875rem;
-      margin-left: 0.5rem;
-      margin-right: 1.625rem;
     }
 
     .content {

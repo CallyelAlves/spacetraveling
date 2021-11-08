@@ -31,18 +31,20 @@
       .info {
         display: flex;
         align-items: center;
+        font-size: 0.875rem;
+        color: var(--info);
+
+        time {
+          margin-left: 0.5rem;
+          margin-right: 1.625rem;
+        }
+  
+        span {
+          margin-left: 0.5rem;
+        }
       }
       
-      time {
-        font-size: 0.875rem;
-        margin-left: 0.5rem;
-        margin-right: 1.625rem;
-      }
-
-      span {
-        font-size: 0.875rem;
-        margin-left: 0.5rem;
-      }
+      
     }
 
     .loadingPosts {

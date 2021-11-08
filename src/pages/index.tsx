@@ -71,7 +71,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
                 <h1>{post.data.title}</h1>
                 <p>{post.data.subtitle}</p>
                 <div className={styles.info}>
-                  <FiCalendar />
+                  <FiCalendar size="20" />
                   <time>
                     {format(
                       new Date(post.first_publication_date),
@@ -81,7 +81,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
                       }
                     )}
                   </time>
-                  <FiUser />
+                  <FiUser size="20" />
                   <span>{post.data.author}</span>
                 </div>
               </a>
