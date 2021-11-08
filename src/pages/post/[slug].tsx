@@ -38,20 +38,6 @@ export default function Post({ post }: PostProps): JSX.Element {
     return Math.ceil(sum + textTime / 200);
   }, 0);
 
-  const timeLast = post.last_publication_date.split(' ');
-
-  function timeLastDate(): string {
-    let result = '';
-    for (let i = 0; i < 3; i += 1) {
-      if (timeLast[i] === timeLast[2]) {
-        result += timeLast[i];
-      } else {
-        result += `${timeLast[i]} `;
-      }
-    }
-    return result;
-  }
-
   return (
     <>
       <Head>
@@ -74,10 +60,7 @@ export default function Post({ post }: PostProps): JSX.Element {
             <time>{readingTime} min</time>
           </div>
           <div className={styles.lastPublicationDate}>
-            <p>
-              * editado em {timeLastDate()}, às{' '}
-              {post.last_publication_date.split(' ')[3]}
-            </p>
+            <p>* editado em {post.last_publication_date}</p>
           </div>
           <div className={styles.content}>
             {post.data.content.map(container => (
@@ -123,7 +106,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     ),
     last_publication_date: format(
       new Date(response.last_publication_date),
-      'dd MMM yyyy hh:mm',
+      "dd MMM yyyy, 'às' HH:mm",
       {
         locale: ptBR,
       }
