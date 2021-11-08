@@ -7,11 +7,12 @@ import { FiCalendar, FiUser, FiClock } from 'react-icons/fi';
 import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import { getPrismicClient } from '../../services/prismic';
-import commonStyles from '../../styles/common.module.scss';
+// import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 
 interface Post {
   first_publication_date: string | null;
+  last_publication_date: string | null;
   data: {
     title: string;
     banner: {
@@ -34,8 +35,18 @@ interface PostProps {
 export default function Post({ post }: PostProps): JSX.Element {
   const readingTime = post.data.content.reduce((sum, content) => {
     const textTime = RichText.asText(content.body).split(' ').length;
-    return Math.ceil((sum + textTime) / 200);
+    return Math.ceil(sum + textTime / 200);
   }, 0);
+
+  const timeLast = post.last_publication_date.split(' ');
+
+  function timeLastDate(): string {
+    let result = '';
+    for (let i = 0; i < 3; i += 1) {
+      result += `${timeLast[i]} `;
+    }
+    return result;
+  }
 
   return (
     <>
@@ -59,19 +70,22 @@ export default function Post({ post }: PostProps): JSX.Element {
             <FiClock />
             <time>{readingTime} min</time>
           </div>
+          <div className={styles.lastPublicationDate}>
+            <p>
+              * editado em {timeLastDate()}, às{' '}
+              {post.last_publication_date.split(' ')[3]}
+            </p>
+          </div>
           <div className={styles.content}>
-            {post.data.content.map(heading => (
+            {post.data.content.map(container => (
               <div key={post.data.title}>
-                <h2 className={styles.heading}>{heading.heading}</h2>
-                {post.data.content.map(container => {
-                  const data = RichText.asHtml(container.body);
-                  return (
-                    <div
-                      className={styles.body}
-                      dangerouslySetInnerHTML={{ __html: String(data) }}
-                    />
-                  );
-                })}
+                <h2 className={styles.heading}>{container.heading}</h2>
+                <div
+                  className={styles.body}
+                  dangerouslySetInnerHTML={{
+                    __html: String(RichText.asHtml(container.body)),
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -95,12 +109,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('post', String(slug), {});
-
   const post = {
     slug,
     first_publication_date: format(
       new Date(response.first_publication_date),
       'dd MMM yyyy',
+      {
+        locale: ptBR,
+      }
+    ),
+    last_publication_date: format(
+      new Date(response.last_publication_date),
+      'dd MMM yyyy hh:mm',
       {
         locale: ptBR,
       }

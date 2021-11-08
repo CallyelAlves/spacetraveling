@@ -23,7 +23,15 @@
     .infos {
       display: flex;
       align-items: center;
-      margin-bottom: 4rem;
+      margin-bottom: 1rem;
+      // margin-bottom: 4rem;
+    }
+
+    .lastPublicationDate {
+      margin-bottom: 3.75rem;
+      font-size: 0.875rem;
+      font-style: italic;
+      color: var(--info);
     }
 
     time {
