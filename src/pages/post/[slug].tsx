@@ -43,7 +43,11 @@ export default function Post({ post }: PostProps): JSX.Element {
   function timeLastDate(): string {
     let result = '';
     for (let i = 0; i < 3; i += 1) {
-      result += `${timeLast[i]} `;
+      if (timeLast[i] === timeLast[2]) {
+        result += timeLast[i];
+      } else {
+        result += `${timeLast[i]} `;
+      }
     }
     return result;
   }
