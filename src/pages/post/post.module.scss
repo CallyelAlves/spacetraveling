@@ -38,13 +38,12 @@
       margin-right: 1.625rem;
     }
 
-
     .content {
       font-size: 1.125rem;
       text-align: justify;
       line-height: 1.6rem;
 
-      h2 {
+      .heading {
         display: inline-block;
         margin-bottom: 1.5rem;
         font-weight: bold;
@@ -52,17 +51,18 @@
         line-height: 3rem;
       }
 
-      div {
+      .body {
         margin-bottom: 2rem;
 
-        p, ul {
+        p,
+        ul {
           margin: 1.5rem 0;
           color: var(--body);
         }
-    
+
         ul {
           padding-left: 1.5rem;
-    
+
           li {
             margin: 0.5rem 0;
           }

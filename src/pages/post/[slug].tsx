@@ -37,11 +37,6 @@ export default function Post({ post }: PostProps): JSX.Element {
     return Math.ceil((sum + textTime) / 200);
   }, 0);
 
-  const body = post.data.content.map(container => {
-    const data = RichText.asHtml(container.body);
-    return data;
-  });
-
   return (
     <>
       <Head>
@@ -66,16 +61,19 @@ export default function Post({ post }: PostProps): JSX.Element {
           </div>
           <div className={styles.content}>
             {post.data.content.map(heading => (
-              <h2
-                dangerouslySetInnerHTML={{ __html: heading.heading }}
-                key={post.data.title}
-              />
+              <div key={post.data.title}>
+                <h2 className={styles.heading}>{heading.heading}</h2>
+                {post.data.content.map(container => {
+                  const data = RichText.asHtml(container.body);
+                  return (
+                    <div
+                      className={styles.body}
+                      dangerouslySetInnerHTML={{ __html: String(data) }}
+                    />
+                  );
+                })}
+              </div>
             ))}
-            <div
-              dangerouslySetInnerHTML={{
-                __html: String(body),
-              }}
-            />
           </div>
         </article>
       </main>
