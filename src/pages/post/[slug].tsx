@@ -47,16 +47,6 @@ export default function Post({
     return Math.ceil(sum + textTime / 200);
   }, 0);
 
-  console.log(prevPost);
-  console.log(nextPost);
-
-  function handleNextPage(): void {
-    // console.log(paths[0]);
-    /*  fetch(paths)
-      .then(response => response.json())
-      .then(data => console.log(data)); */
-  }
-
   return (
     <>
       <Head>
@@ -100,7 +90,7 @@ export default function Post({
         <div className={styles.footer}>
           <div />
           <div className={styles.buttons}>
-            {prevPost !== null && (
+            {prevPost !== null ? (
               <Link href={`/post/${prevPost.uid}`}>
                 <a>
                   <button type="button">
@@ -109,19 +99,21 @@ export default function Post({
                   </button>
                 </a>
               </Link>
+            ) : (
+              <div />
             )}
 
             {nextPost !== null ? (
-              <Link href={`/post/${nextPost.uid}`}>
+              <Link href={`/post/${nextPost?.uid}`}>
                 <a>
-                  <button type="button" onClick={handleNextPage}>
-                    {nextPost.data?.title}
+                  <button className={styles.nextPost} type="button">
+                    {nextPost?.data?.title}
                     <span className={styles.nextPost}>Próximo post</span>
                   </button>
                 </a>
               </Link>
             ) : (
-              ''
+              <div />
             )}
           </div>
         </div>
@@ -191,7 +183,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         after: `${response.id}`,
         orderings: '[document.first_publication_date]',
       })
-    ).results[0] || 'null';
+    ).results[0] || null;
 
   const prevPost =
     (
@@ -200,7 +192,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         after: `${response.id}`,
         orderings: '[docement.first_publication_date desc]',
       })
-    ).results[0] || 'null';
+    ).results[0] || null;
 
   return {
     props: { post, prevPost, nextPost },
