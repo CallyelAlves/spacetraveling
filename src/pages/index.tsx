@@ -32,7 +32,7 @@ interface HomeProps {
 
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
   const [nextPages, setNextPages] = useState(postsPagination.next_page);
-  const [nextPage, setNextPage] = useState<Post[]>([
+  const [postResults, setPostResults] = useState<Post[]>([
     ...postsPagination.results,
   ]);
 
@@ -40,11 +40,11 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
     fetch(postsPagination.next_page)
       .then(response => response.json())
       .then(data => {
-        setNextPage(data.results);
+        setPostResults(data.results);
         setNextPages(data.next_page);
       });
 
-    const posts = nextPage.map(post => ({
+    const posts = postResults.map(post => ({
       uid: post.uid,
       first_publication_date: post.first_publication_date,
       data: {
@@ -54,7 +54,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
       },
     }));
 
-    setNextPage([...postsPagination.results, ...posts]);
+    setPostResults([...postResults, ...posts]);
   }
 
   return (
@@ -65,7 +65,7 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
       <main className={styles.container}>
         <div className={styles.pots}>
-          {nextPage.map(post => (
+          {postResults.map(post => (
             <Link href={`/post/${post.uid}`} key={post.uid}>
               <a>
                 <h1>{post.data.title}</h1>

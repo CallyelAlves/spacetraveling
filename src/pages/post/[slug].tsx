@@ -73,7 +73,7 @@ export default function Post({
           </div>
           <div className={styles.content}>
             {post.data.content.map(container => (
-              <div key={post.data.title}>
+              <div key={container.heading}>
                 <h2 className={styles.heading}>{container.heading}</h2>
                 <div
                   className={styles.body}
@@ -91,10 +91,10 @@ export default function Post({
           <div />
           <div className={styles.buttons}>
             {prevPost !== null ? (
-              <Link href={`/post/${prevPost.uid}`}>
+              <Link key={prevPost.uid} href={`/post/${prevPost.uid}`}>
                 <a>
                   <button type="button">
-                    {prevPost.data?.title}
+                    {prevPost?.data.title}
                     <span>Ponst anterior</span>
                   </button>
                 </a>
@@ -104,10 +104,10 @@ export default function Post({
             )}
 
             {nextPost !== null ? (
-              <Link href={`/post/${nextPost?.uid}`}>
+              <Link key={nextPost.uid} href={`/post/${nextPost?.uid}`}>
                 <a>
                   <button className={styles.nextPost} type="button">
-                    {nextPost?.data?.title}
+                    {nextPost?.data.title}
                     <span className={styles.nextPost}>Próximo post</span>
                   </button>
                 </a>
@@ -195,7 +195,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     ).results[0] || null;
 
   return {
-    props: { post, prevPost, nextPost },
+    props: { post, nextPost, prevPost },
     revalidate: 60 * 30,
   };
 };
