@@ -48,6 +48,7 @@
       font-size: 1.125rem;
       text-align: justify;
       line-height: 1.6rem;
+      margin-bottom: 3.75rem;
 
       .heading {
         display: inline-block;
@@ -60,10 +61,18 @@
       .body {
         margin-bottom: 2rem;
 
+        .body:last-child {
+          margin: 0;
+        }      
+
         p,
         ul {
           margin: 1.5rem 0;
           color: var(--body);
+        }
+
+        p:last-child, ul:last-child, li:last-child {
+          margin-bottom: 0;
         }
 
         ul {
@@ -75,5 +84,48 @@
         }
       }
     }
+  }
+}
+
+.footer {
+  max-width: 721px;
+  margin: 0 auto;
+
+  div:first-child {
+    border-top: 1px solid var(--body);
+    opacity: 0.1;
+  }
+
+  .buttons {
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 18rem;
+
+    button {
+      display: block;
+      background: none;
+      border: 0;
+      font-size: 1.125rem;
+      color: var(--heading);
+      outline: none;
+      text-align: start;
+
+      span {
+        display: block;
+        padding-top: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--highlight);
+        text-align: start;
+      }
+    }
+
+    .nextPost {
+      text-align: end;
+    }
+
+    
   }
 }
