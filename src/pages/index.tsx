@@ -37,11 +37,11 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   ]);
 
   function handleNextPage(): void {
-    fetch(postsPagination.next_page)
+    fetch(nextPages)
       .then(response => response.json())
       .then(data => {
-        setPostResults(data.results);
         setNextPages(data.next_page);
+        setPostResults(data.results);
       });
 
     const posts = postResults.map(post => ({
@@ -116,7 +116,7 @@ export const getStaticProps: GetStaticProps = async () => {
         'post.banner',
         'post.content',
       ],
-      pageSize: 2,
+      pageSize: 1,
     }
   );
 
