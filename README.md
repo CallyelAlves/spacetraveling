@@ -7,7 +7,7 @@
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-executando-a-aplicação">Executando a aplicação</a>
+  <a href="#-executando-aplicaçãp">Executando aplicação</a>
 </p>
 
 ## 🚀 Tecnologias
@@ -45,7 +45,7 @@ Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu navega
 
 Lembrando que é preciso criar uma conta no prismic e configurar as variáveis ambiente.
 
-## 🎬 Executando a aplicação
+## 🎬 Executando aplicação
 
 <p align="center">
   <img width="800" alt="video" src="./github/video.gif">
