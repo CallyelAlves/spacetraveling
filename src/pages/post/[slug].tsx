@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 import Head from 'next/head';
 import { RichText } from 'prismic-dom';
+import Comments from '../../components/Comments';
 import { getPrismicClient } from '../../services/prismic';
 // import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
@@ -117,12 +118,12 @@ export default function Post({
             )}
           </div>
         </div>
+        <Comments />
       </footer>
     </>
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient();
 
