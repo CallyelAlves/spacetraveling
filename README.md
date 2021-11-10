@@ -1,4 +1,6 @@
-<img align="center" src="public/logo.svg">
+<div align="center">
+  <img align="center" src="public/logo.svg">
+</div>
 <hr>
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
