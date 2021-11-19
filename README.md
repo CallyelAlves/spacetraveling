@@ -25,7 +25,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 💻 Projeto
 
 O **Spacetraveling** é uma aplicação de listagem de post, nela você pode ler postagens, navegar entre posts do blog e realizar comentários.
-O projeto foi desenvolvido através de um desafio da Rocketseat.
+O projeto foi desenvolvido através de um desafio da Rocketseat. Projeto esse que foi desenvolvido do zero seguindo o layout do figma.
 
 Essa aplicação tem conexão com a api do **Prismic**, CMS responsável pela publicação dos posts.
 
